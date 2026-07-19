@@ -5,6 +5,11 @@
     box-sizing: border-box;
 }
 
+html, body {
+    width: 100%;
+    overflow-x: hidden;
+}
+
 body {
     font-family: 'Inter', sans-serif;
 }
@@ -62,14 +67,20 @@ body {
 }
 
 .nav-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 70px;
     width: 100%;
+    box-sizing: border-box;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
 }
 
 .nav-menu {
@@ -78,15 +89,14 @@ body {
     gap: 2rem;
 }
 
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
 .logo-image {
     width: 40px;
     height: 40px;
+    object-fit: contain;
+}
+
+.logo-text-image {
+    height: 126px;
     object-fit: contain;
 }
 
@@ -155,7 +165,6 @@ body {
     justify-content: center;
     position: relative;
     padding-top: 70px;
-    overflow: hidden;
 }
 
 .hero-content {
@@ -174,6 +183,12 @@ body {
     align-items: center;
     gap: 0.5rem;
     z-index: 10;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.scroll-indicator.visible {
+    opacity: 1;
     animation: bounce 2s infinite;
 }
 
@@ -202,6 +217,25 @@ body {
     }
 }
 
+@keyframes fadeInBounce {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(0);
+    }
+    5% {
+        opacity: 1;
+    }
+    25%, 45%, 75%, 95% {
+        transform: translateX(-50%) translateY(0);
+    }
+    35% {
+        transform: translateX(-50%) translateY(-10px);
+    }
+    55% {
+        transform: translateX(-50%) translateY(-5px);
+    }
+}
+
 .hero-title {
     font-size: 4rem;
     font-weight: 800;
@@ -210,14 +244,13 @@ body {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    animation: fadeInUp 1s ease;
 }
 
 .hero-subtitle {
     font-size: 1.5rem;
     color: var(--text-secondary);
     margin-bottom: 2rem;
-    animation: fadeInUp 1s ease 0.2s backwards;
+    min-height: 2rem;
 }
 
 .hero-buttons {
@@ -225,7 +258,6 @@ body {
     gap: 1rem;
     justify-content: center;
     flex-wrap: wrap;
-    animation: fadeInUp 1s ease 0.4s backwards;
 }
 
 .hero-background {
@@ -240,35 +272,35 @@ body {
 .gradient-orb {
     position: absolute;
     border-radius: 50%;
-    filter: blur(80px);
-    opacity: 0.4;
+    filter: blur(100px);
+    opacity: 0.25;
 }
 
 .orb-1 {
-    width: 500px;
-    height: 500px;
+    width: 600px;
+    height: 600px;
     background: var(--accent-primary);
-    top: 15%;
-    left: 5%;
-    animation: float1 15s ease-in-out infinite;
+    top: -10%;
+    left: -5%;
+    animation: float1 20s ease-in-out infinite;
 }
 
 .orb-2 {
-    width: 400px;
-    height: 400px;
+    width: 500px;
+    height: 500px;
     background: var(--accent-secondary);
-    top: 50%;
-    right: 5%;
-    animation: float2 18s ease-in-out infinite;
+    top: 40%;
+    right: -10%;
+    animation: float2 25s ease-in-out infinite;
 }
 
 .orb-3 {
-    width: 450px;
-    height: 450px;
+    width: 550px;
+    height: 550px;
     background: var(--accent-orange);
-    bottom: 15%;
-    left: 45%;
-    animation: float3 20s ease-in-out infinite;
+    bottom: -15%;
+    left: 30%;
+    animation: float3 22s ease-in-out infinite;
 }
 
 /* Buttons */

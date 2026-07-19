@@ -46,7 +46,16 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Intersection Observer for scroll animations
+// Intersection Observer for scroll animations with scroll direction tracking
+let lastScrollY = window.scrollY;
+let scrollDirection = 'down';
+
+window.addEventListener('scroll', () => {
+    const currentScrollY = window.scrollY;
+    scrollDirection = currentScrollY > lastScrollY ? 'down' : 'up';
+    lastScrollY = currentScrollY;
+});
+
 const observerOptions = {
     threshold: 0.1,
     rootMargin: '0px 0px -50px 0px'
@@ -55,8 +64,22 @@ const observerOptions = {
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
+            if (scrollDirection === 'down') {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            } else {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        } else {
+            // When scrolling away, reverse the animation
+            if (scrollDirection === 'up') {
+                entry.target.style.opacity = '0';
+                entry.target.style.transform = 'translateY(-30px)';
+            } else {
+                entry.target.style.opacity = '0';
+                entry.target.style.transform = 'translateY(30px)';
+            }
         }
     });
 }, observerOptions);
@@ -196,6 +219,14 @@ if (heroSubtitle) {
     
     // Start typing after a short delay
     setTimeout(typeWriter, 1000);
+}
+
+// Show scroll indicator after 4 seconds
+const scrollIndicator = document.querySelector('.scroll-indicator');
+if (scrollIndicator) {
+    setTimeout(() => {
+        scrollIndicator.classList.add('visible');
+    }, 4000);
 }
 
 // Console welcome message
